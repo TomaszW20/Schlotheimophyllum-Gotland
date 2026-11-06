@@ -63,14 +63,9 @@
     </div>
 
     <script>
-        let filtered = []; // W 100% poprawnie domknięta tablica
+        let filtered = [];
         const grid = document.getElementById("gallery-grid"), counter = document.getElementById("item-counter"), siteFilter = document.getElementById("filter-site");
         
-        // Oficjalne i pełne ścieżki sieciowe kierujące do konta TomaszW20 oraz projektu nr 1
-        const baseImgUrl = "https://jsdelivr.net";
-        const fallbackImgUrl = "https://jsdelivr.net";
-        const rootImgUrl = "https://jsdelivr.net";
-
         window.onload = () => {
             if (typeof specimens === 'undefined') { counter.innerText = "Error: specimens.js missing"; return; }
             const sites = [...new Set(specimens.map(i => i.site).filter(Boolean))].sort();
@@ -78,25 +73,13 @@
             filtered = [...specimens]; render();
         };
 
-        function getCorrectFilename(item) {
-            let f = item.file || item.filename || item.name || "";
-            if (f && !f.includes("_2400") && f.endsWith(".jpg")) {
-                return f.replace(".jpg", "_2400.jpg");
-            }
-            return f;
-        }
-
         function render() {
             grid.innerHTML = ""; counter.innerText = "Items on screen: " + filtered.length + " of " + specimens.length;
             if(!filtered.length) { grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666;padding:40px;">No specimens found.</p>'; return; }
             filtered.forEach((item, index) => {
                 const card = document.createElement("div"); card.className = "card"; card.setAttribute("onclick", "openM(" + index + ")");
                 const disp = item.full_id ? item.full_id : (item.file || '').replace('.jpg', '');
-                
-                const realFile = getCorrectFilename(item);
-                const finalImgSrc = baseImgUrl + realFile;
-                
-                card.innerHTML = '<img src="' + finalImgSrc + '" loading="lazy" onerror="this.onerror=function(){this.onerror=function(){this.onerror=null;this.src=\'' + rootImgUrl + '\'+\'' + realFile + '\'};this.src=\'' + fallbackImgUrl + '\'+\'' + realFile + '\'};this.src=\'' + finalImgSrc + '\'"><h3>' + disp + '</h3>';
+                card.innerHTML = '<img src="gal1/' + item.file + '" loading="lazy"><h3>' + disp + '</h3>';
                 grid.appendChild(card);
             });
         }
@@ -111,20 +94,7 @@
         
         function updateM() {
             const item = filtered[currentIdx]; const disp = item.full_id ? item.full_id : (item.file || '').replace('.jpg', '');
-            
-            const realFile = getCorrectFilename(item);
-            const finalImgSrc = baseImgUrl + realFile;
-            const modalImg = document.getElementById("modal-img");
-            modalImg.src = finalImgSrc;
-            
-            modalImg.onerror = function() { 
-                this.onerror = function() {
-                    this.onerror = null;
-                    this.src = rootImgUrl + realFile;
-                };
-                this.src = fallbackImgUrl + realFile; 
-            };
-            
+            document.getElementById("modal-img").src = "gal1/" + item.file; 
             document.getElementById("modal-title").innerText = disp;
             document.getElementById("modal-details").innerHTML = '<div><span><b>Sampling Site:</b> ' + (item.site || "N/A") + '</span> | <span><b>Specimen Type:</b> ' + (item.type || "N/A") + '</span> | <span><b>Image Category:</b> ' + (item.pic_type || "N/A") + '</span></div><div><a href="https://zenodo.org/files/gal2.zip?download=1" class="ln-download" target="_blank">📥 Download Complete High-Resolution RAW Scan Pack (1 GB ZIP from CERN Zenodo)</a></div>';
         }
@@ -134,9 +104,7 @@
         
         document.addEventListener("keydown", function(e) {
             if (document.getElementById("modal").style.display === "flex") {
-                if (e.key === "Escape") closeModal(); 
-                if (e.key === "ArrowRight") changeSpecimen(1); 
-                if (e.key === "ArrowLeft") changeSpecimen(-1);
+                if (e.key === "Escape") closeModal(); if (e.key === "ArrowRight") changeSpecimen(1); if (e.key === "ArrowLeft") changeSpecimen(-1);
             }
         });
     </script>
