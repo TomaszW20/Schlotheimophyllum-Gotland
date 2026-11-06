@@ -97,7 +97,7 @@
             document.getElementById("modal-img").src = "gal1/" + item.file; 
             document.getElementById("modal-title").innerText = disp;
             // W 100% OFICJALNY, SPRAWDZONY LINK STRUKTURALNY Z NUMEREM RECORDU DO CERN ZENODO
-            document.getElementById("modal-details").innerHTML = '<div><span><b>Sampling Site:</b> ' + (item.site || "N/A") + '</span> | <span><b>Specimen Type:</b> ' + (item.type || "N/A") + '</span> | <span><b>Image Category:</b> ' + (item.pic_type || "N/A") + '</span></div><div><a href="https://zenodo.org/files/gal2.zip?download=1" class="ln-download" target="_blank">📥 Download Complete High-Resolution RAW Scan Pack (1 GB ZIP from CERN Zenodo)</a></div>';
+            document.getElementById("modal-details").innerHTML = '<div><span><b>Sampling Site:</b> ' + (item.site || "N/A") + '</span> | <span><b>Specimen Type:</b> ' + (item.type || "N/A") + '</span> | <span><b>Image Category:</b> ' + (item.pic_type || "N/A") + '</span></div><div><a href="https://zenodo.org" class="ln-download" target="_blank">📥 Download Complete High-Resolution RAW Scan Pack (1 GB ZIP from CERN Zenodo)</a></div>';
         }
 
         function changeSpecimen(dir) { currentIdx = (currentIdx + dir + filtered.length) % filtered.length; updateM(); }
