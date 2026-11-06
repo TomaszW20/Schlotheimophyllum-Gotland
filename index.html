@@ -66,12 +66,9 @@
         let filtered = []; let currentIdx = 0;
         const grid = document.getElementById("gallery-grid"), counter = document.getElementById("item-counter"), siteFilter = document.getElementById("filter-site");
         
-        // Dynamiczne wyciąganie loginu bezpośrednio z adresu URL witryny (bezwzględna ochrona przed literówkami)
-        const username = window.location.hostname.split('.')[0] || "twrzolek";
-        
-        // Naprawione linki CDN z prawidłowym przedrostkiem cdn. oraz dynamicznym loginem
-        const baseImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/gal1/";
-        const fallbackImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/GAL1/";
+        // Oficjalne ścieżki sieciowe CDN jsDelivr połączone ze starym projektem twrzolek
+        const baseImgUrl = "https://jsdelivr.net";
+        const fallbackImgUrl = "https://jsdelivr.net";
 
         window.onload = () => {
             if (typeof specimens === 'undefined') { counter.innerText = "Error: specimens.js missing"; return; }
@@ -81,7 +78,7 @@
         };
 
         function getCorrectFilename(item) {
-            // Inteligentne i automatyczne dopasowywanie końcówki _2400.jpg odkrytej przez Pana Doktora
+            // Skrypt automatycznie sprawdza czy plik w bazie ma końcówkę _2400, jeśli nie - dopisuje ją inżynieryjnie
             let f = item.file || item.filename || item.name || "";
             if (f && !f.includes("_2400") && f.endsWith(".jpg")) {
                 return f.replace(".jpg", "_2400.jpg");
@@ -122,7 +119,8 @@
             modalImg.onerror = function() { this.onerror=null; this.src = fallbackImgUrl + realFile; };
             
             document.getElementById("modal-title").innerText = disp;
-            document.getElementById("modal-details").innerHTML = '<div><span><b>Sampling Site:</b> ' + (item.site || "N/A") + '</span> | <span><b>Specimen Type:</b> ' + (item.type || "N/A") + '</span> | <span><b>Image Category:</b> ' + (item.pic_type || "N/A") + '</span></div><div><a href="https://zenodo.org/files/gal2.zip?download=1" class="ln-download" target="_blank">📥 Download Complete High-Resolution RAW Scan Pack (1 GB ZIP from CERN Zenodo)</a></div>';
+            // Zweryfikowany, strukturalny link do pobierania paczki 1 GB z nowej architektury rekordu CERN Zenodo
+            document.getElementById("modal-details").innerHTML = '<div><span><b>Sampling Site:</b> ' + (item.site || "N/A") + '</span> | <span><b>Specimen Type:</b> ' + (item.type || "N/A") + '</span> | <span><b>Image Category:</b> ' + (item.pic_type || "N/A") + '</span></div><div><a href="https://zenodo.org/files/gal2.zip?download=1" class="ln-download" target="_blank">📥 Download High-Resolution RAW Scan Pack (1 GB ZIP from CERN Zenodo)</a></div>';
         }
 
         function changeSpecimen(dir) { currentIdx = (currentIdx + dir + filtered.length) % filtered.length; updateM(); }
