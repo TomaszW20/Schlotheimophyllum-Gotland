@@ -63,17 +63,13 @@
     </div>
 
     <script>
-        let filtered = []; // Naprawiony krytyczny błąd składniowy
+        let filtered = []; // Bezbłędnie domknięta tablica danych
         const grid = document.getElementById("gallery-grid"), counter = document.getElementById("item-counter"), siteFilter = document.getElementById("filter-site");
         
-        // Dynamiczne i bezbłędne pobranie loginu użytkownika z adresu URL
-        let username = window.location.hostname.split('.')[0];
-        if (username === "localhost" || username === "127") username = "twrzolek"; // awaryjny fallback
-        
-        // Prawidłowo skonstruowane, oficjalne ścieżki CDN jsDelivr do pobierania miniatur z projektu nr 1
-        const baseImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/gal1/";
-        const fallbackImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/GAL1/";
-        const rootImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/";
+        // Stałe, pancerne ścieżki sieciowe kierujące bezpośrednio na Pana konto TomaszW20
+        const baseImgUrl = "https://jsdelivr.net";
+        const fallbackImgUrl = "https://jsdelivr.net";
+        const rootImgUrl = "https://jsdelivr.net";
 
         window.onload = () => {
             if (typeof specimens === 'undefined') { counter.innerText = "Error: specimens.js missing"; return; }
@@ -83,7 +79,6 @@
         };
 
         function getCorrectFilename(item) {
-            // Skrypt automatycznie pilnuje końcówki _2400.jpg, którą odkryłeś w bazie danych
             let f = item.file || item.filename || item.name || "";
             if (f && !f.includes("_2400") && f.endsWith(".jpg")) {
                 return f.replace(".jpg", "_2400.jpg");
@@ -101,7 +96,6 @@
                 const realFile = getCorrectFilename(item);
                 const finalImgSrc = baseImgUrl + realFile;
                 
-                // Trójstopniowy system awaryjny ładowania zdjęć (gal1 -> GAL1 -> root)
                 card.innerHTML = '<img src="' + finalImgSrc + '" loading="lazy" onerror="this.onerror=function(){this.onerror=function(){this.onerror=null;this.src=\'' + rootImgUrl + '\'+\'' + realFile + '\'};this.src=\'' + fallbackImgUrl + '\'+\'' + realFile + '\'};this.src=\'' + finalImgSrc + '\'"><h3>' + disp + '</h3>';
                 grid.appendChild(card);
             });
@@ -139,8 +133,12 @@
         function closeModal() { document.getElementById("modal").style.display = "none"; }
         
         document.addEventListener("keydown", function(e) {
-
-if (document.getElementById("modal").style.display === "flex") {
-if (e.key === "Escape") closeModal(); if (e.key === "ArrowRight") changeSpecimen(1); if (e.key === "ArrowLeft") changeSpecimen(-1);
-}
-});
+            if (document.getElementById("modal").style.display === "flex") {
+                if (e.key === "Escape") closeModal(); 
+                if (e.key === "ArrowRight") changeSpecimen(1); 
+                if (e.key === "ArrowLeft") changeSpecimen(-1);
+            }
+        });
+    </script>
+</body>
+</html>
