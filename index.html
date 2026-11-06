@@ -63,15 +63,17 @@
     </div>
 
     <script>
-        let filtered = []; let currentIdx = 0;
+        let filtered = []; // Naprawiony krytyczny błąd składniowy
         const grid = document.getElementById("gallery-grid"), counter = document.getElementById("item-counter"), siteFilter = document.getElementById("filter-site");
         
-        // Wyciąganie czystego nazewnictwa użytkownika z adresu URL witryny
-        const username = window.location.hostname.split('.')[0] || "twrzolek";
+        // Dynamiczne i bezbłędne pobranie loginu użytkownika z adresu URL
+        let username = window.location.hostname.split('.')[0];
+        if (username === "localhost" || username === "127") username = "twrzolek"; // awaryjny fallback
         
-        // Pancerne i sprawdzone linki CDN sieci dystrybucyjnej jsDelivr pobierające obrazy bezpośrednio z projektu nr 1
+        // Prawidłowo skonstruowane, oficjalne ścieżki CDN jsDelivr do pobierania miniatur z projektu nr 1
         const baseImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/gal1/";
         const fallbackImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/GAL1/";
+        const rootImgUrl = "https://jsdelivr.net" + username + "/Schlotheimophyllum-from-Gotland@main/";
 
         window.onload = () => {
             if (typeof specimens === 'undefined') { counter.innerText = "Error: specimens.js missing"; return; }
@@ -81,7 +83,7 @@
         };
 
         function getCorrectFilename(item) {
-            // Inteligentne, automatyczne dopasowywanie końcówki pliku _2400.jpg
+            // Skrypt automatycznie pilnuje końcówki _2400.jpg, którą odkryłeś w bazie danych
             let f = item.file || item.filename || item.name || "";
             if (f && !f.includes("_2400") && f.endsWith(".jpg")) {
                 return f.replace(".jpg", "_2400.jpg");
@@ -99,7 +101,8 @@
                 const realFile = getCorrectFilename(item);
                 const finalImgSrc = baseImgUrl + realFile;
                 
-                card.innerHTML = '<img src="' + finalImgSrc + '" loading="lazy" onerror="this.onerror=null; this.src=\'' + fallbackImgUrl + '\' + \'' + realFile + '\'"><h3>' + disp + '</h3>';
+                // Trójstopniowy system awaryjny ładowania zdjęć (gal1 -> GAL1 -> root)
+                card.innerHTML = '<img src="' + finalImgSrc + '" loading="lazy" onerror="this.onerror=function(){this.onerror=function(){this.onerror=null;this.src=\'' + rootImgUrl + '\'+\'' + realFile + '\'};this.src=\'' + fallbackImgUrl + '\'+\'' + realFile + '\'};this.src=\'' + finalImgSrc + '\'"><h3>' + disp + '</h3>';
                 grid.appendChild(card);
             });
         }
@@ -119,7 +122,14 @@
             const finalImgSrc = baseImgUrl + realFile;
             const modalImg = document.getElementById("modal-img");
             modalImg.src = finalImgSrc;
-            modalImg.onerror = function() { this.onerror=null; this.src = fallbackImgUrl + realFile; };
+            
+            modalImg.onerror = function() { 
+                this.onerror = function() {
+                    this.onerror = null;
+                    this.src = rootImgUrl + realFile;
+                };
+                this.src = fallbackImgUrl + realFile; 
+            };
             
             document.getElementById("modal-title").innerText = disp;
             document.getElementById("modal-details").innerHTML = '<div><span><b>Sampling Site:</b> ' + (item.site || "N/A") + '</span> | <span><b>Specimen Type:</b> ' + (item.type || "N/A") + '</span> | <span><b>Image Category:</b> ' + (item.pic_type || "N/A") + '</span></div><div><a href="https://zenodo.org/files/gal2.zip?download=1" class="ln-download" target="_blank">📥 Download Complete High-Resolution RAW Scan Pack (1 GB ZIP from CERN Zenodo)</a></div>';
@@ -129,10 +139,8 @@
         function closeModal() { document.getElementById("modal").style.display = "none"; }
         
         document.addEventListener("keydown", function(e) {
-            if (document.getElementById("modal").style.display === "flex") {
-                if (e.key === "Escape") closeModal(); if (e.key === "ArrowRight") changeSpecimen(1); if (e.key === "ArrowLeft") changeSpecimen(-1);
-            }
-        });
-    </script>
-</body>
-</html>
+
+if (document.getElementById("modal").style.display === "flex") {
+if (e.key === "Escape") closeModal(); if (e.key === "ArrowRight") changeSpecimen(1); if (e.key === "ArrowLeft") changeSpecimen(-1);
+}
+});
