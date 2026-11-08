@@ -80,6 +80,18 @@
   #vimg { position: absolute; left: 0; top: 0; transform-origin: 0 0; max-width: none; user-select: none; -webkit-user-drag: none; display: none; }
   #vmsg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 15px; text-align: center; padding: 20px; pointer-events: none; }
 
+  /* ---------- About panel ---------- */
+  #about { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.82); display: none; align-items: center; justify-content: center; padding: 16px; }
+  #about.on { display: flex; }
+  .about-box { background: var(--panel); border: 1px solid #2a2a2a; border-radius: 8px; width: min(820px, 100%); max-height: 100%; overflow-y: auto; padding: 18px 24px 20px; line-height: 1.55; font-size: 14.5px; color: #ddd; }
+  .about-box h2 { margin: 0 0 10px; font-size: 18px; color: #fff; }
+  .about-box h3 { margin: 16px 0 4px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .about-box p { margin: 0 0 8px; }
+  .about-box ul { margin: 0; padding-left: 20px; }
+  .about-box li { margin-bottom: 4px; }
+  .about-box .fin { text-align: center; font-weight: 600; color: #fff; margin-top: 16px; }
+  .about-top { display: flex; justify-content: flex-end; }
+
   @media (max-width: 900px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .vbar .hint { display: none; } }
 </style>
 <script src="specimens.js"></script>
@@ -97,6 +109,8 @@
     </div>
     <input type="search" id="search" placeholder="Search ID, type, file…" autocomplete="off">
     <select id="site"><option value="">All locations</option></select>
+    <button class="btn" id="about-en" type="button">About EN</button>
+    <button class="btn" id="about-pl" type="button">About PL</button>
     <span class="counter" id="counter"></span>
   </div>
 </header>
@@ -120,6 +134,13 @@
 </main>
 
 <footer>dataset <a href="https://doi.org/10.5281/zenodo.23989716" target="_blank" rel="noopener">doi.org/10.5281/zenodo.23989716</a> &nbsp;·&nbsp; licence <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></footer>
+
+<div id="about" role="dialog" aria-label="About">
+  <div class="about-box">
+    <div class="about-top"><button class="btn" id="about-close" type="button">✕ close</button></div>
+    <div id="about-body"></div>
+  </div>
+</div>
 
 <div id="viewer" role="dialog" aria-label="Full size preview">
   <div class="vbar">
@@ -153,7 +174,7 @@ const THUMB_BASE = "";
 // then via raw.githubusercontent.com. Set a repository name to null if it is not available yet.
 const GH_USER = "TomaszW20";
 const FULL_REPOS = {
-  a: "Schlotheimophyllum-gal2-a",                                   // TODO: name of the first gal2 repository (scans 1-75)
+  a: "Schlotheimophyllum-gal2-a",            // scans 1-75
   b: "Schlotheimophyllum-gal2-b",
   c: "Schlotheimophyllum-gal2-c"
 };
@@ -406,10 +427,71 @@ window.addEventListener("resize", () => {
   const wasFit = atFit(); bounds(); if (wasFit) V.s = V.fit; V.s = clamp(V.s, V.min, V.max); clampPan(); apply();
 });
 
+/* ============ About (EN / PL) ============ */
+const ABOUT = {
+  en: `
+    <h2><i>Schlotheimophyllum patellatum</i> (Schlotheim, 1820)</h2>
+    <h3>The species</h3>
+    <p>A rugose coral that lived in the Palaeozoic, in the Silurian, in the earliest Wenlock (Sheinwoodian), roughly 433–431 million years ago (Upper Visby Beds of Gotland). It inhabited a shallow, open shelf sea of the Baltica palaeocontinent (not deeper than about 20–50 m), in warm waters close to the tropics.</p>
+    <p>The species was named in 1820 by Baron von Schlotheim on the basis of a specimen from the Silurian of Gotland. The genus name <i>Schlotheimophyllum</i> was introduced by Stanley Smith in 1945.</p>
+    <h3>The project</h3>
+    <ul>
+      <li>In 2018 three researchers from the University of Silesia collected 58 specimens of this species from pebbles on Gotland beaches.</li>
+      <li>Within a few months the specimens were photographed, measured and cut.</li>
+      <li>About 200 thin sections and acetate peels were made from them and then scanned.</li>
+      <li>A few museum specimens were borrowed from the Museum of Palaeontology in Uppsala.</li>
+      <li>Describing the accumulated material took a year or two.</li>
+      <li>The first paper was published in <i>Lethaia</i> in 2020, the second in <i>Annales Societatis Geologorum Poloniae</i> in 2023.</li>
+    </ul>
+    <p style="margin-top:8px">This gallery presents the sections that were the basis of both publications.</p>
+    <h3>References</h3>
+    <ul>
+      <li>1820 Schlotheim E. V. von: <i>Die Petrefactenkunde…</i> Becker’sche Buchhandlung, Gotha.</li>
+      <li>1945 Smith S.: <i>Upper Devonian corals…</i> Geological Society of America, Special Paper 59.</li>
+      <li>2020 Zatoń et al.: <i>Patterns of sclerobiont colonization…</i> Lethaia, doi: <a href="https://doi.org/10.1111/let.12371" target="_blank" rel="noopener">10.1111/let.12371</a></li>
+      <li>2023 Wrzołek &amp; Zatoń: <i>Silurian rugose coral…</i> Annales Societatis Geologorum Poloniae, doi: <a href="https://doi.org/10.14241/asgp.2023.09" target="_blank" rel="noopener">10.14241/asgp.2023.09</a></li>
+    </ul>
+    <p class="fin">Ladies and gentlemen: <i>Schlotheimophyllum patellatum</i>!</p>`,
+  pl: `
+    <h2><i>Schlotheimophyllum patellatum</i> (Schlotheim, 1820)</h2>
+    <h3>Gatunek</h3>
+    <p>Koral czteropromienisty, który żył w erze paleozoicznej, w okresie sylurskim, w najwcześniejszym wenloku (sheinwood), mniej więcej 433–431 milionów lat temu (Upper Visby Beds Gotlandii). Zamieszkiwał płytkie, otwarte morze szelfowe kontynentu Baltica (nie głębiej niż 20–50 m), w ciepłych wodach w pobliżu zwrotników.</p>
+    <p>Nazwę gatunkową nadał w 1820 roku baron Schlotheim na podstawie okazu z syluru Gotlandii. Nazwę rodzajową <i>Schlotheimophyllum</i> utworzył Stanley Smith w 1945 roku.</p>
+    <h3>Projekt</h3>
+    <ul>
+      <li>W 2018 roku trzech badaczy z Uniwersytetu Śląskiego zebrało z otoczaków na plażach Gotlandii 58 okazów tego gatunku.</li>
+      <li>W ciągu kilku miesięcy okazy sfotografowano, pomierzono i pocięto.</li>
+      <li>Wykonano z nich około 200 szlifów cienkich i odcisków octanowych, które następnie zeskanowano.</li>
+      <li>Z Muzeum Paleontologicznego w Uppsali wypożyczono kilka okazów muzealnych.</li>
+      <li>Opisywanie zgromadzonego materiału trwało rok lub dwa.</li>
+      <li>Pierwszy artykuł ukazał się w <i>Lethaia</i> w 2020 roku, kolejny w <i>Annales Societatis Geologorum Poloniae</i> w 2023 roku.</li>
+    </ul>
+    <p style="margin-top:8px">Galeria przedstawia przekroje, które były podstawą obu publikacji.</p>
+    <h3>Literatura</h3>
+    <ul>
+      <li>1820 Schlotheim E. V. von: <i>Die Petrefactenkunde…</i> Becker’sche Buchhandlung, Gotha.</li>
+      <li>1945 Smith S.: <i>Upper Devonian corals…</i> Geological Society of America, Special Paper 59.</li>
+      <li>2020 Zatoń et al.: <i>Patterns of sclerobiont colonization…</i> Lethaia, doi: <a href="https://doi.org/10.1111/let.12371" target="_blank" rel="noopener">10.1111/let.12371</a></li>
+      <li>2023 Wrzołek &amp; Zatoń: <i>Silurian rugose coral…</i> Annales Societatis Geologorum Poloniae, doi: <a href="https://doi.org/10.14241/asgp.2023.09" target="_blank" rel="noopener">10.14241/asgp.2023.09</a></li>
+    </ul>
+    <p class="fin">Przed Państwem <i>Schlotheimophyllum patellatum</i>!</p>`
+};
+function openAbout(lang) {
+  $("about-body").innerHTML = ABOUT[lang];
+  $("about").classList.add("on");
+  $("about").querySelector(".about-box").scrollTop = 0;
+}
+function closeAbout() { $("about").classList.remove("on"); }
+$("about-en").onclick = () => openAbout("en");
+$("about-pl").onclick = () => openAbout("pl");
+$("about-close").onclick = closeAbout;
+$("about").addEventListener("click", e => { if (e.target.id === "about") closeAbout(); });
+
 /* ============ keyboard ============ */
 document.addEventListener("keydown", e => {
   if (e.target.matches && e.target.matches("input[type=search], select")) return;
   if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if ($("about").classList.contains("on")) { if (e.key === "Escape") closeAbout(); return; }
   const viewer = $("viewer").classList.contains("on");
   if (viewer) {
     if (e.key === "Escape") closeViewer();
