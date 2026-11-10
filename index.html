@@ -113,7 +113,7 @@ header { padding: 5px 10px !important; margin-bottom: 5px !important; }
     </a>
   </div>
 
-  <div class="toolbar" style="margin-top: 4px !important; padding-top: 0 !important; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+<div class="toolbar" style="margin-top: 4px !important; padding-top: 0 !important; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
     <div style="display: flex; align-items: center; gap: 10px;">
       <div class="seg" role="tablist">
         <button id="tab-gallery" class="on" type="button" style="font-size: 11px !important; padding: 2px 6px !important;">Gallery</button>
@@ -124,10 +124,50 @@ header { padding: 5px 10px !important; margin-bottom: 5px !important; }
       <button class="btn" id="about-en" type="button" style="font-size: 11px !important; padding: 2px 6px !important;">About EN</button>
       <button class="btn" id="about-pl" type="button" style="font-size: 11px !important; padding: 2px 6px !important;">About PL</button>
     </div>
-    <!-- LICZNIK PRZENIESIONY DO CZWARTEJ LINII -->
     <span class="counter" id="counter" style="font-size: 11px !important; font-weight: bold; color: var(--dim);"></span>
   </div>
-</header>
+
+  <!-- Okno modalne z pełną tabelą korekt -->
+  <div id="corr-modal" onclick="if(event.target == this) this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
+    <div style="background: #111; border: 1px solid #222; width: 100%; max-width: 650px; max-height: 80vh; padding: 20px; border-radius: 6px; overflow-y: scroll; position: relative; font-family: sans-serif; color: #eee; font-size: 12px; line-height: 1.4;">
+      <span onclick="document.getElementById('corr-modal').style.display='none'" style="position: absolute; right: 15px; top: 8px; font-size: 26px; cursor: pointer; color: #888; font-weight: bold; user-select: none;">&times;</span>
+      <h3 style="margin-top: 0; color: #4aa3df; border-bottom: 1px solid #222; padding-bottom: 8px; font-size: 15px;">📊 Specimen ID# Concordance / Corrigenda Table</h3>
+      <p style="font-size: 11px; font-style: italic; color: #888; margin-bottom: 15px;">Wrzołek &amp; Zatoń (2023, ASGP) Supplement vs. Interactive Gallery.</p>
+      
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 2px solid #222; color: #4aa3df; font-weight: bold;">
+            <th style="padding: 6px;">Group</th>
+            <th style="padding: 6px;">Original ID# (ASGP 2023)</th>
+            <th style="padding: 6px;">Gallery URL ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK03</b></td><td style="padding: 6px;">HK 03_5, 03_6, 03_4, 03_3, 03_1, 03_2</td><td style="padding: 6px; color: #4aa3df;">HK03-T1 – HK03-T6b</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK18</b></td><td style="padding: 6px;">HK 18</td><td style="padding: 6px; color: #4aa3df;">HK18-T</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK19</b></td><td style="padding: 6px;">HK 19 T1, T2, T3</td><td style="padding: 6px; color: #4aa3df;">HK19-T1, T2, T3</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK20</b></td><td style="padding: 6px;">HK 20_3, 20_2a, 20_2, 20_1</td><td style="padding: 6px; color: #4aa3df;">HK20-T1 – HK20-T4</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK21</b></td><td style="padding: 6px;">HK 21 T1, T2</td><td style="padding: 6px; color: #4aa3df;">HK21-T1, T2</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK22</b></td><td style="padding: 6px;">HK 22 T1, T2, T3</td><td style="padding: 6px; color: #4aa3df;">HK22-T1, T2, T3</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK23</b></td><td style="padding: 6px;">HK 23_3</td><td style="padding: 6px; color: #4aa3df;">HK23-L3</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK24</b></td><td style="padding: 6px;">HK 24</td><td style="padding: 6px; color: #4aa3df;">HK24-F1, F2, F3</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK25</b></td><td style="padding: 6px;">HK 25</td><td style="padding: 6px; color: #4aa3df;">HK25-F1AB, F2AB</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK26</b></td><td style="padding: 6px;">HK 26_1</td><td style="padding: 6px; color: #4aa3df;">HK26-T1, T2ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK27</b></td><td style="padding: 6px;">HK 27</td><td style="padding: 6px; color: #4aa3df;">HK27-T1, T2ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK28</b></td><td style="padding: 6px;">HK 28_5</td><td style="padding: 6px; color: #4aa3df;">HK28-T5ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK29</b></td><td style="padding: 6px;">HK 29</td><td style="padding: 6px; color: #4aa3df;">HK29-T1ab, T2, T3</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK30</b></td><td style="padding: 6px;">HK 30_1, 30_2, 30_3</td><td style="padding: 6px; color: #4aa3df;">HK30-T1ab, T2, T3ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK31</b></td><td style="padding: 6px;">HK 31_1, 31_2</td><td style="padding: 6px; color: #4aa3df;">HK31-T1, T2ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK52</b></td><td style="padding: 6px;">HK 52_06, 52_05, 52_01</td><td style="padding: 6px; color: #4aa3df;">HK52-T1ab, T2, T3ab–T6</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK53</b></td><td style="padding: 6px;">HK 53 T3b, T5, T1</td><td style="padding: 6px; color: #4aa3df;">HK53-T1abc, T2ab, T4–T5ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK54</b></td><td style="padding: 6px;">HK 54 T2c, T4, T1</td><td style="padding: 6px; color: #4aa3df;">HK54-T1ab, T2, T3–T4ab</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>IV (Ireviken)</b></td><td style="padding: 6px;">IV 01 – IV 08, IV 13, IV 33</td><td style="padding: 6px; color: #4aa3df;">IV01-T – IV08-T1/T2, IV13-Tab, IV33-TTa,b</td></tr>
+          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>LH (Lickershamn)</b></td><td style="padding: 6px;">LH 01, 02 T2, 02 T1, 16, 17, 19</td><td style="padding: 6px; color: #4aa3df;">LH01-T1ab, T2, LH02-T1–T3, LH16-F1,F2, LH17, LH19</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</header>  
   
 <main>
   <section id="gallery"><div class="grid" id="grid"></div></section>
