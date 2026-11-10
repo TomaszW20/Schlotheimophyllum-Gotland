@@ -93,6 +93,11 @@
   .about-top { display: flex; justify-content: flex-end; }
 
   @media (max-width: 900px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .vbar .hint { display: none; } }
+header { padding: 5px 10px !important; margin-bottom: 5px !important; }
+.t1 { font-size: 14px !important; margin-bottom: 2px !important; }
+.t2, .t3 { font-size: 11px !important; margin-bottom: 2px !important; }
+.toolbar { margin-top: 4px !important; padding-top: 0 !important; }
+.toolbar button, .toolbar input, .toolbar select { font-size: 11px !important; padding: 2px 6px !important; height: auto !important; }
 </style>
 <script src="specimens.js"></script>
 </head>
@@ -100,7 +105,7 @@
 
 <header style="position: relative;">
   <div class="t1"><i>Schlotheimophyllum patellatum</i> (Schlotheim, 1820), a rugose coral from the Silurian of Gotland, Sweden.</div>
-  <div class="t2">Annex to paper by Tomasz Wrzołek &amp; Michał Zatoń in ASGP journal, doi: <a href="https://doi.org" target="_blank" rel="noopener">10.14241/asgp.2023.09</a></div>
+  <div class="t2">Annex to paper by Tomasz Wrzołek &amp; Michał Zatoń in ASGP journal, doi: <a href="https://pgi.gov.pl" target="_blank" rel="noopener">10.14241/asgp.2023.09</a></div>
   <div class="t3" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
   <span>Paleontological collection of the University of Silesia, Katowice, Poland (GIUS)</span>
   <button type="button" onclick="document.getElementById('corr-modal').style.display='flex'" style="background: var(--accent-bg); border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 4px; font-family: inherit; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 0 8px rgba(74, 163, 223, 0.4); transition: all 0.2s;">
