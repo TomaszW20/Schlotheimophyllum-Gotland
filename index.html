@@ -92,6 +92,20 @@
   .about-box .fin { text-align: center; font-weight: 600; color: #fff; margin-top: 16px; }
   .about-top { display: flex; justify-content: flex-end; }
 
+  /* ---------- Addenda / Corrigenda panel (table is loaded from README.md) ---------- */
+  #corr { position: fixed; inset: 0; z-index: 70; background: rgba(0,0,0,.82); display: none; align-items: center; justify-content: center; padding: 16px; }
+  #corr.on { display: flex; }
+  #corr .about-box { width: min(920px, 100%); font-size: 13.5px; }
+  #corr h3 { text-transform: none; letter-spacing: 0; font-size: 15px; margin-top: 0; }
+  #corr .corr-src { margin-top: 10px; font-size: 12px; color: var(--dim); }
+  .corr-wrap { overflow-x: auto; margin: 10px 0 4px; }
+  .corr-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+  .corr-table th { color: var(--accent); border-bottom: 2px solid #2a2a2a; padding: 6px 8px; position: sticky; top: 0; background: var(--panel); }
+  .corr-table td { padding: 3px 8px; border-bottom: 1px solid #181818; vertical-align: top; }
+  .corr-table td.grp { font-weight: 600; color: #fff; border-bottom: 1px solid #333; border-right: 1px solid #181818; white-space: nowrap; }
+  .corr-table td.new { color: var(--accent); }
+  .corr-table tr.last td { border-bottom: 1px solid #333; }
+
   @media (max-width: 900px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .vbar .hint { display: none; } }
 header { padding: 5px 10px !important; margin-bottom: 5px !important; }
 .t1 { font-size: 14px !important; margin-bottom: 2px !important; }
@@ -105,10 +119,10 @@ header { padding: 5px 10px !important; margin-bottom: 5px !important; }
 
 <header style="padding: 5px 10px !important; margin-bottom: 5px !important;">
   <div class="t1" style="font-size: 14px !important; margin-bottom: 2px !important;"><i>Schlotheimophyllum patellatum</i> (Schlotheim, 1820), a rugose coral from the Silurian of Gotland, Sweden.</div>
-  <div class="t2">Annex to paper by Tomasz Wrzołek &amp; Michał Zatoń in ASGP journal, doi: <a href="https://doi.org" target="_blank" rel="noopener">10.14241/asgp.2023.09</a></div>  
+  <div class="t2">Annex to paper by Tomasz Wrzołek &amp; Michał Zatoń in ASGP journal, doi: <a href="https://doi.org/10.14241/asgp.2023.09" target="_blank" rel="noopener">10.14241/asgp.2023.09</a></div>  
   <div class="t3" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 11px !important; margin-bottom: 2px !important;">
     <span>Paleontological collection of the University of Silesia, Katowice, Poland (GIUS)</span>
-  <button type="button" onclick="document.getElementById('corr-modal').style.display='flex'" style="background: var(--accent-bg); border: 1px solid var(--accent); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; box-shadow: 0 0 6px rgba(74, 163, 223, 0.3); transition: all 0.2s;">
+  <button type="button" id="corr-open" style="background: var(--accent-bg); border: 1px solid var(--accent); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-family: inherit; font-size: 11px; font-weight: bold; cursor: pointer; box-shadow: 0 0 6px rgba(74, 163, 223, 0.3); transition: all 0.2s;">
   Addenda / Corrigenda
 </button>  
   </div>
@@ -125,47 +139,6 @@ header { padding: 5px 10px !important; margin-bottom: 5px !important; }
       <button class="btn" id="about-pl" type="button" style="font-size: 11px !important; padding: 2px 6px !important;">About PL</button>
     </div>
     <span class="counter" id="counter" style="font-size: 11px !important; font-weight: bold; color: var(--dim);"></span>
-  </div>
-
-  <!-- Okno modalne z pełną tabelą korekt -->
-  <div id="corr-modal" onclick="if(event.target == this) this.style.display='none'" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100000; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
-    <div style="background: #111; border: 1px solid #222; width: 100%; max-width: 650px; max-height: 80vh; padding: 20px; border-radius: 6px; overflow-y: scroll; position: relative; font-family: sans-serif; color: #eee; font-size: 12px; line-height: 1.4;">
-      <span onclick="document.getElementById('corr-modal').style.display='none'" style="position: absolute; right: 15px; top: 8px; font-size: 26px; cursor: pointer; color: #888; font-weight: bold; user-select: none;">&times;</span>
-      <h3 style="margin-top: 0; color: #4aa3df; border-bottom: 1px solid #222; padding-bottom: 8px; font-size: 15px;">📊 Specimen ID# Concordance / Corrigenda Table</h3>
-      <p style="font-size: 11px; font-style: italic; color: #888; margin-bottom: 15px;">Wrzołek &amp; Zatoń (2023, ASGP) Supplement vs. Interactive Gallery.</p>
-      
-      <table style="width: 100%; border-collapse: collapse; text-align: left;">
-        <thead>
-          <tr style="border-bottom: 2px solid #222; color: #4aa3df; font-weight: bold;">
-            <th style="padding: 6px;">Group</th>
-            <th style="padding: 6px;">Original ID# (ASGP 2023)</th>
-            <th style="padding: 6px;">Gallery URL ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK03</b></td><td style="padding: 6px;">HK 03_5, 03_6, 03_4, 03_3, 03_1, 03_2</td><td style="padding: 6px; color: #4aa3df;">HK03-T1 – HK03-T6b</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK18</b></td><td style="padding: 6px;">HK 18</td><td style="padding: 6px; color: #4aa3df;">HK18-T</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK19</b></td><td style="padding: 6px;">HK 19 T1, T2, T3</td><td style="padding: 6px; color: #4aa3df;">HK19-T1, T2, T3</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK20</b></td><td style="padding: 6px;">HK 20_3, 20_2a, 20_2, 20_1</td><td style="padding: 6px; color: #4aa3df;">HK20-T1 – HK20-T4</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK21</b></td><td style="padding: 6px;">HK 21 T1, T2</td><td style="padding: 6px; color: #4aa3df;">HK21-T1, T2</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK22</b></td><td style="padding: 6px;">HK 22 T1, T2, T3</td><td style="padding: 6px; color: #4aa3df;">HK22-T1, T2, T3</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK23</b></td><td style="padding: 6px;">HK 23_3</td><td style="padding: 6px; color: #4aa3df;">HK23-L3</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK24</b></td><td style="padding: 6px;">HK 24</td><td style="padding: 6px; color: #4aa3df;">HK24-F1, F2, F3</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK25</b></td><td style="padding: 6px;">HK 25</td><td style="padding: 6px; color: #4aa3df;">HK25-F1AB, F2AB</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK26</b></td><td style="padding: 6px;">HK 26_1</td><td style="padding: 6px; color: #4aa3df;">HK26-T1, T2ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK27</b></td><td style="padding: 6px;">HK 27</td><td style="padding: 6px; color: #4aa3df;">HK27-T1, T2ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK28</b></td><td style="padding: 6px;">HK 28_5</td><td style="padding: 6px; color: #4aa3df;">HK28-T5ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK29</b></td><td style="padding: 6px;">HK 29</td><td style="padding: 6px; color: #4aa3df;">HK29-T1ab, T2, T3</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK30</b></td><td style="padding: 6px;">HK 30_1, 30_2, 30_3</td><td style="padding: 6px; color: #4aa3df;">HK30-T1ab, T2, T3ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK31</b></td><td style="padding: 6px;">HK 31_1, 31_2</td><td style="padding: 6px; color: #4aa3df;">HK31-T1, T2ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK52</b></td><td style="padding: 6px;">HK 52_06, 52_05, 52_01</td><td style="padding: 6px; color: #4aa3df;">HK52-T1ab, T2, T3ab–T6</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK53</b></td><td style="padding: 6px;">HK 53 T3b, T5, T1</td><td style="padding: 6px; color: #4aa3df;">HK53-T1abc, T2ab, T4–T5ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>HK54</b></td><td style="padding: 6px;">HK 54 T2c, T4, T1</td><td style="padding: 6px; color: #4aa3df;">HK54-T1ab, T2, T3–T4ab</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>IV (Ireviken)</b></td><td style="padding: 6px;">IV 01 – IV 08, IV 13, IV 33</td><td style="padding: 6px; color: #4aa3df;">IV01-T – IV08-T1/T2, IV13-Tab, IV33-TTa,b</td></tr>
-          <tr style="border-bottom: 1px solid #222;"><td style="padding: 6px;"><b>LH (Lickershamn)</b></td><td style="padding: 6px;">LH 01, 02 T2, 02 T1, 16, 17, 19</td><td style="padding: 6px; color: #4aa3df;">LH01-T1ab, T2, LH02-T1–T3, LH16-F1,F2, LH17, LH19</td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </header>  
   
@@ -193,6 +166,13 @@ header { padding: 5px 10px !important; margin-bottom: 5px !important; }
   <div class="about-box">
     <div class="about-top"><button class="btn" id="about-close" type="button">✕ close</button></div>
     <div id="about-body"></div>
+  </div>
+</div>
+
+<div id="corr" role="dialog" aria-label="Addenda / Corrigenda">
+  <div class="about-box">
+    <div class="about-top"><button class="btn" id="corr-close" type="button">✕ close</button></div>
+    <div id="corr-body"></div>
   </div>
 </div>
 
@@ -541,11 +521,136 @@ $("about-pl").onclick = () => openAbout("pl");
 $("about-close").onclick = closeAbout;
 $("about").addEventListener("click", e => { if (e.target.id === "about") closeAbout(); });
 
+/* ============ Addenda / Corrigenda (table is read from README.md) ============ */
+// The table is maintained in README.md only; editing that file updates the gallery as well.
+// README.md is tried next to this page first (GitHub Pages), then on raw.githubusercontent.com.
+const CORR_SOURCES = [
+  "README.md",
+  "https://raw.githubusercontent.com/" + GH_USER + "/Schlotheimophyllum-Gotland/" + BRANCH + "/README.md"
+];
+const CORR_PAGE = "https://github.com/" + GH_USER + "/Schlotheimophyllum-Gotland#readme";
+let corrState = "idle";   // idle | loading | done
+
+// HTML entities (e.g. &amp;) are decoded through a textarea, so nothing from README.md is ever run as HTML.
+const decodeEnt = s => { const t = document.createElement("textarea"); t.innerHTML = s; return t.value; };
+
+// **bold** and *italic* only; everything else is plain text.
+function inline(parent, text) {
+  text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/).forEach(part => {
+    if (!part) return;
+    let el = null, body = part;
+    if (/^\*\*[^*]+\*\*$/.test(part)) { el = document.createElement("b"); body = part.slice(2, -2); }
+    else if (/^\*[^*]+\*$/.test(part)) { el = document.createElement("i"); body = part.slice(1, -1); }
+    const node = document.createTextNode(decodeEnt(body));
+    if (el) { el.appendChild(node); parent.appendChild(el); } else parent.appendChild(node);
+  });
+}
+
+// README.md -> [{t:"h", text} | {t:"p", text} | {t:"table", rows:[[cell, ...], ...]}]
+// The repository intro above the first "##" heading is skipped.
+function parseReadme(md) {
+  const lines = md.replace(/\r/g, "").split("\n");
+  let i = lines.findIndex(l => /^##\s/.test(l));
+  if (i < 0) i = 0;
+  const out = []; let para = [];
+  const flush = () => { if (para.length) { out.push({ t: "p", text: para.join(" ") }); para = []; } };
+  for (; i < lines.length; i++) {
+    const l = lines[i].trim();
+    if (!l) { flush(); continue; }
+    if (/^#{1,6}\s/.test(l)) { flush(); out.push({ t: "h", text: l.replace(/^#+\s*/, "") }); }
+    else if (l.startsWith("|")) {
+      flush();
+      const rows = [];
+      while (i < lines.length && lines[i].trim().startsWith("|")) {
+        const cells = lines[i].trim().replace(/^\||\|$/g, "").split("|").map(c => c.trim());
+        if (!cells.every(c => /^:?-{2,}:?$/.test(c))) rows.push(cells);   // skip the |:---|:---| line
+        i++;
+      }
+      i--;
+      out.push({ t: "table", rows });
+    } else para.push(l);
+  }
+  flush();
+  return out;
+}
+
+// Cells hold several IDs separated by <br>. When the "original" and "gallery" cells have the same
+// number of lines, each line becomes its own row, so original ID and gallery ID stand side by side.
+function renderTable(rows) {
+  const wrap = document.createElement("div"); wrap.className = "corr-wrap";
+  const tbl = document.createElement("table"); tbl.className = "corr-table"; wrap.appendChild(tbl);
+  const hr = tbl.createTHead().insertRow();
+  rows[0].forEach(h => { const th = document.createElement("th"); inline(th, h); hr.appendChild(th); });
+  const tb = tbl.createTBody();
+  rows.slice(1).forEach(r => {
+    const cols = r.map(c => c.split(/<br\s*\/?>/i).map(s => s.trim()).filter(Boolean));
+    const rest = cols.slice(1);
+    const n = rest.length ? rest[0].length : 0;
+    const aligned = n > 0 && rest.every(c => c.length === n);
+    const count = aligned ? n : 1;
+    for (let k = 0; k < count; k++) {
+      const tr = tb.insertRow();
+      if (k === count - 1) tr.className = "last";
+      if (k === 0) { const td = tr.insertCell(); td.className = "grp"; td.rowSpan = count; inline(td, r[0]); }
+      rest.forEach((lines, ci) => {
+        const td = tr.insertCell();
+        if (ci === rest.length - 1) td.className = "new";
+        if (aligned) inline(td, lines[k]);
+        else lines.forEach((ln, j) => { if (j) td.appendChild(document.createElement("br")); inline(td, ln); });
+      });
+    }
+  });
+  return wrap;
+}
+
+async function loadCorr() {
+  if (corrState !== "idle") return;
+  corrState = "loading";
+  const body = $("corr-body");
+  body.textContent = "Loading table…";
+  let blocks = null;
+  for (const u of CORR_SOURCES) {
+    try {
+      const r = await fetch(u, { cache: "no-cache" });
+      if (!r.ok) continue;
+      const b = parseReadme(await r.text());
+      if (b.some(x => x.t === "table")) { blocks = b; break; }
+    } catch (e) { /* try next source */ }
+  }
+  body.textContent = "";
+  if (!blocks) {
+    const p = document.createElement("p");
+    p.append("The table could not be loaded here. It is available in ");
+    const a = document.createElement("a"); a.href = CORR_PAGE; a.target = "_blank"; a.rel = "noopener"; a.textContent = "README.md on GitHub";
+    p.append(a, ".");
+    body.appendChild(p);
+    corrState = "idle";   // try again next time
+    return;
+  }
+  blocks.forEach(b => {
+    if (b.t === "table") { body.appendChild(renderTable(b.rows)); return; }
+    const el = document.createElement(b.t === "h" ? "h3" : "p");
+    inline(el, b.text); body.appendChild(el);
+  });
+  const src = document.createElement("p"); src.className = "corr-src";
+  src.append("Source: ");
+  const a = document.createElement("a"); a.href = CORR_PAGE; a.target = "_blank"; a.rel = "noopener"; a.textContent = "README.md";
+  src.append(a, " in the GitHub repository.");
+  body.appendChild(src);
+  corrState = "done";
+}
+function openCorr() { $("corr").classList.add("on"); $("corr").querySelector(".about-box").scrollTop = 0; loadCorr(); }
+function closeCorr() { $("corr").classList.remove("on"); }
+$("corr-open").onclick = openCorr;
+$("corr-close").onclick = closeCorr;
+$("corr").addEventListener("click", e => { if (e.target.id === "corr") closeCorr(); });
+
 /* ============ keyboard ============ */
 document.addEventListener("keydown", e => {
   if (e.target.matches && e.target.matches("input[type=search], select")) return;
   if (e.ctrlKey || e.metaKey || e.altKey) return;
   if ($("about").classList.contains("on")) { if (e.key === "Escape") closeAbout(); return; }
+  if ($("corr").classList.contains("on")) { if (e.key === "Escape") closeCorr(); return; }
   const viewer = $("viewer").classList.contains("on");
   if (viewer) {
     if (e.key === "Escape") closeViewer();
